@@ -59,3 +59,32 @@ FROM
   payroll, financials
 WHERE 
   payroll.period = financials.period;
+  
+/* 7 - Identificar os funcionários que estão prontos para serem promovidos */
+/* 
+Em uma grande organização, os gerentes de RH geralmente enfrentam o desafio de identificar os funcionários que estão prontos para serem promovidos. 
+Não se trata apenas de analisar a pontuação de desempenho mais recente. 
+Trata-se de considerar toda a jornada do funcionário dentro da empresa. Os fatores podem incluir:
+	- Alto desempenho consistente ao longo de vários anos.
+	- Permanência na empresa (por exemplo, funcionários que estão na empresa há mais de 3 anos).
+	- Conclusão de programas específicos de treinamento ou certificação.
+Abaixo está uma consulta SQL hipotética que poderia fornecer os insights de que você precisa. Ela identifica os funcionários que:
+	- Estão na empresa desde pelo menos 2020.
+	- Concluíram um "Programa de Liderança Avançada".
+	- Mantiveram uma pontuação média de desempenho acima de 4,5 (em uma escala de 1 a 5) por vários anos.
+O resultado? Uma lista selecionada de funcionários, classificada por seu desempenho consistente, pronta para possíveis promoções internas.
+*/
+SELECT 
+	e.employee_name, 
+	e.department, 
+	AVG(r.performance_score) as avg_score, 
+	e.join_date, 
+	t.training_completed
+FROM employees e
+	JOIN annual_reviews r ON e.employee_id = r.employee_id
+	JOIN training_programs t ON e.employee_id = t.employee_id
+WHERE e.join_date <= '2020-01-01'
+	AND t.training_completed = 'Advanced Leadership Program'
+GROUP BY e.employee_name, e.department, e.join_date, t.training_completed
+HAVING AVG(r.performance_score) > 4.5
+ORDER BY avg_score DESC;
