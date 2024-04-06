@@ -1,6 +1,12 @@
-📊 **Repositório de Consultas SQL para Analistas de Dados**
+<p align="center">
+<img src = "./Images/thumbnail.jpg">
+</p>
 
-Este repositório foi cuidadosamente criado para fornecer uma extensa coleção de consultas SQL que visam facilitar o trabalho dos analistas de dados em diversas áreas de uma empresa, incluindo marketing, logística, comercial, financeiro, recursos humanos e muito mais.
+<h1 align="center">📊 **Repositório de Consultas SQL para Analistas de Dados**</h1> 
+
+> Este repositório foi cuidadosamente criado para fornecer uma extensa coleção de consultas SQL que visam facilitar o trabalho dos analistas de dados em diversas áreas de uma empresa, incluindo marketing, logística, comercial, financeiro, recursos humanos e muito mais.
+
+---
 
 🎯 **Objetivo:**
 O objetivo principal deste repositório é oferecer uma fonte confiável de consultas SQL prontas para uso, permitindo que os analistas de dados economizem tempo e esforço na criação de consultas complexas. As consultas foram elaboradas para abordar uma variedade de cenários comuns enfrentados pelos analistas de dados em seu dia a dia.
