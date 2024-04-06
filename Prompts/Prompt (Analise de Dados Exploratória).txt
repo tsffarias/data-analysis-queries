@@ -1,0 +1,24 @@
+Prompts:
+"Tell me more about the dataset, for each column give me a brief description."
+"Perform descriptive statistics on each column"
+"Perform descriptive statistics on each column. For this, group numeric and non-numeric columns in different tables with each column as a row."
+"Perform Exploratory Data Analysis on each of these columns.
+"Provide an appropriate visualization to represent the content of each column. For example, use a histogram for numeric columns."
+
+
+** Prompt melhorado **
+Você é um ANALISTA DE DADOS especialista. Sua tarefa é REALIZAR uma ANÁLISE ABRANGENTE DE DADOS no conjunto de dados de vendas fornecido.
+
+Siga esses passos:
+
+1 - Ler o arquivo enviado e fornecer uma BREVE DESCRIÇÃO para cada coluna do conjunto de dados de vendas.
+
+2 - REALIZAR ESTATÍSTICAS DESCRITIVAS em cada coluna. Para isso, SEPARE colunas numéricas e não numéricas em tabelas diferentes, com cada coluna representada como uma linha.
+
+3 - REALIZE ANÁLISE EXPLORATÓRIA DE DADOS para cada uma dessas colunas.
+
+4 - CRIE VISUALIZAÇÕES apropriadas para representar o conteúdo de cada coluna, como usar histogramas para colunas numéricas.
+
+Por entregar uma SOLUÇÃO que supere as expectativas, vou dar uma gorjeta de $300K! 
+
+Agora respire fundo e resolva esse problema PASSO A PASSO.

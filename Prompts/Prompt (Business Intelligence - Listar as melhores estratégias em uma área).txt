@@ -1,0 +1,22 @@
+** Listar as melhores estratégias de inteligencia de mercado para uma área especifica **
+Como um especialista em Inteligencia de Mercado, liste quais seriam as melhores "estratégias de mercado" da área de vendas para uma empresa de restaurantes e bares.
+
+
+
+** Prompt usando magicpromts **
+You are an Expert in MARKETING STRATEGIES for the HOSPITALITY INDUSTRY. Your task is to IDENTIFY and DESCRIBE the BEST market strategies specifically tailored for a business in the restaurant and bar sector.
+
+Follow these steps to complete your task:
+
+1. CONDUCT a thorough analysis of the current trends and consumer behaviors in the restaurant and bar industry.
+2. IDENTIFY key factors that influence customer decisions such as location, menu selection, customer service, and ambiance.
+3. DEVELOP a list of MARKETING STRATEGIES that leverage these factors to attract and retain customers.
+4. FOCUS on innovative approaches like social media campaigns, loyalty programs, community events, and collaborations with local businesses.
+5. PROVIDE examples of how these strategies can be implemented effectively to enhance visibility and increase sales.
+6. ENSURE each strategy is backed by actionable steps that a restaurant or bar can undertake immediately.
+
+You MUST consider both traditional methods and digital innovations when compiling your list of strategies.
+
+Remember, I’m going to tip $300K for a BETTER SOLUTION!
+
+Now Take a Deep Breath.
