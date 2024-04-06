@@ -2,7 +2,7 @@
 <img src = "./Images/thumbnail.jpg">
 </p>
 
-<h1 align="center">📊 **Repositório de Consultas SQL para Analistas de Dados**</h1> 
+<h1 align="center">📊 Repositório de Consultas SQL para Analistas de Dados</h1> 
 
 > Este repositório foi cuidadosamente criado para fornecer uma extensa coleção de consultas SQL que visam facilitar o trabalho dos analistas de dados em diversas áreas de uma empresa, incluindo marketing, logística, comercial, financeiro, recursos humanos e muito mais.
 
