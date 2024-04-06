@@ -35,17 +35,27 @@ ORDER BY ano, mes;
 SELECT AVG(valor_total_pedido) AS ticket_medio
 FROM pedidos;
 
-/* 5 - Análise de Satisfação dos Clientes */
+/* 5 - Preço médio de Produto - Por Estado */
+/* Pode fornecer insights valiosos sobre as variações de preço em diferentes regiões e o desempenho das marcas em cada mercado estadual. */
+SELECT 
+    estado,
+    marca,
+    AVG(preco) AS preco_medio
+FROM tabela_de_vendas
+WHERE data_venda BETWEEN '2023-01-01' AND '2023-12-31'
+GROUP BY estado, marca;
+
+/* 6 - Análise de Satisfação dos Clientes */
 /* Avalia a experiência dos usuários por meio de avaliações e feedbacks, influenciando a reputação da empresa. */
 SELECT AVG(avaliacao) AS satisfacao_media
 FROM feedback_clientes;
 
-/* 6 - Taxa de Retenção de Clientes */
+/* 7 - Taxa de Retenção de Clientes */
 /* Mensura a capacidade de manter os usuários ativos na plataforma ao longo do tempo. */
 SELECT (COUNT(DISTINCT clientes_ativos_mes_atual) / COUNT(DISTINCT clientes_ativos_mes_anterior) - 1) AS taxa_retencão
 FROM clientes_ativos;
 
-/* 7 - Top 10 clientes que mais compraram, por região */
+/* 8 - Top 10 clientes que mais compraram, por região */
 SELECT 
     regiao,
     cliente_id,
@@ -55,14 +65,14 @@ GROUP BY regiao, cliente_id
 ORDER BY num_compras DESC
 LIMIT 10;
 
-/* 8 - Top 10 Produtos Mais Vendidos */
+/* 9 - Top 10 Produtos Mais Vendidos */
 SELECT produto, COUNT(DISTINCT order_id) AS num_vendas
 FROM vendas
 GROUP BY produto
 ORDER BY num_vendas DESC
 LIMIT 10;
 
-/* 9 - Número de clientes por mês */
+/* 10 - Número de clientes por mês */
 SELECT 
     EXTRACT(MONTH FROM data_registro) AS mes,
     EXTRACT(YEAR FROM data_registro) AS ano,
@@ -71,7 +81,7 @@ FROM clientes
 GROUP BY mes, ano
 ORDER BY ano, mes;
 
-/* 10 - Número de pedidos por mês */
+/* 11 - Número de pedidos por mês */
 SELECT 
     EXTRACT(MONTH FROM data_pedido) AS mes,
     EXTRACT(YEAR FROM data_pedido) AS ano,
