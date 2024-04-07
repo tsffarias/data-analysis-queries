@@ -99,6 +99,11 @@ WHERE campanha = 'Nome_da_Campanha'
 AND data_pedido BETWEEN '2024-01-01' AND '2024-03-31' 
 GROUP BY part_of_day;
 
-
+/* Usuários que não tem compra em dezembro de 2022 */
+select distinct
+  u.id
+from bigquery-public-data.thelook_ecommerce.users u
+left join bigquery-public-data.thelook_ecommerce.orders o on u.id = o.user_id and date(o.created_at) between "2022-12-01" and "2022-12-31"
+where o.user_id is null;
 
 

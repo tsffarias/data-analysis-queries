@@ -89,3 +89,46 @@ SELECT
 FROM pedidos
 GROUP BY mes, ano
 ORDER BY ano, mes;
+
+/* 12 - Usuários que não tem compra em dezembro de 2022 */
+select distinct
+  u.id
+from bigquery-public-data.thelook_ecommerce.users u
+left join bigquery-public-data.thelook_ecommerce.orders o on u.id = o.user_id and date(o.created_at) between "2022-12-01" and "2022-12-31"
+where o.user_id is null;
+
+/* 13 - informações resumidas sobre os usuários (de todos, tendo ou não compras). 
+- Id do usuário
+- Quantidade de compras realizadas
+- Quantidade de itens comprados
+- Ticket médio
+- Quantidade de produtos distintos comprados
+- Centro de distribuições dos quais o usuário recebeu produtos
+- Quantidade de criações de carrinho. 
+*/
+select
+  u.id,
+  ticket_medio,
+  compras_realizadas,
+  itens_comprados,
+  produtos_distintos,
+  centros_distribuicao,
+  count(distinct e.id) as eventos_carrinho
+from bigquery-public-data.thelook_ecommerce.users u
+left join bigquery-public-data.thelook_ecommerce.events e on e.user_id = u.id and event_type = 'cart'
+left join (
+  select
+    o.user_id,
+    sum(sale_price)/count(distinct o.order_id) as ticket_medio,
+    count(distinct o.order_id) as compras_realizadas,
+    count(distinct oi.id) as itens_comprados,
+    count(distinct p.id) as produtos_distintos,
+    count(distinct d.id) as centros_distribuicao
+  from bigquery-public-data.thelook_ecommerce.orders o
+  left join bigquery-public-data.thelook_ecommerce.order_items oi on o.order_id = oi.order_id
+  left join bigquery-public-data.thelook_ecommerce.products p on p.id = oi.product_id
+  left join bigquery-public-data.thelook_ecommerce.distribution_centers d on d.id = p.distribution_center_id
+  group by 1
+) as T on T.user_id = u.id
+group by 1, 2, 3, 4, 5, 6
+order by id;

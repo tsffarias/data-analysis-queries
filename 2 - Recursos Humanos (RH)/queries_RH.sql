@@ -2,7 +2,7 @@
 /* KPI: Turnover Rate = (Número de Desligamentos / Média de Funcionários) * 100 */
 
 SELECT 
-  (COUNT(employee_id) / AVG(total_employees)) * 100 AS turnover_rate
+  (COUNT(DISTINCT employee_id) / AVG(total_employees)) * 100 AS turnover_rate
 FROM 
   employee_departures, total_employees
 WHERE 
@@ -12,7 +12,7 @@ WHERE
 /* KPI: Cost Per Hire = (Custo Total de Contratação / Número de Contratações) */
 
 SELECT 
-  SUM(cost) / COUNT(hire_id) AS cost_per_hire
+  SUM(cost) / COUNT(DISTINCT hire_id) AS cost_per_hire
 FROM 
   hiring_costs
 WHERE 
