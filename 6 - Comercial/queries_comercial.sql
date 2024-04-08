@@ -32,8 +32,20 @@ ORDER BY ano, mes;
 
 /* 4 - Ticket Médio de Pedidos */
 /* Mede o valor médio gasto por pedido, indicando o poder de compra dos clientes e o desempenho das vendas. */
-SELECT AVG(valor_total_pedido) AS ticket_medio
-FROM pedidos;
+SELECT
+  user_id,
+  AVG(receita) AS ticket_medio
+FROM (
+  SELECT 
+    order_id,
+    user_id,
+    ROUND(SUM(sale_price), 2) AS receita 
+  FROM `bigquery-public-data.thelook_ecommerce.order_items`
+  WHERE status = 'Complete'
+  GROUP BY 1, 2
+)
+GROUP BY 1
+ORDER BY 2 DESC
 
 /* 5 - Preço médio de Produto - Por Estado */
 /* Pode fornecer insights valiosos sobre as variações de preço em diferentes regiões e o desempenho das marcas em cada mercado estadual. */

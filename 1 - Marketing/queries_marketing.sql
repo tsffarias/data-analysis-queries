@@ -106,4 +106,20 @@ from bigquery-public-data.thelook_ecommerce.users u
 left join bigquery-public-data.thelook_ecommerce.orders o on u.id = o.user_id and date(o.created_at) between "2022-12-01" and "2022-12-31"
 where o.user_id is null;
 
+/* Ticket Médio de Pedidos (marketing pode selecionar usuários com uma certa faixa especifica para uma campanha especifica) */
+/* Mede o valor médio gasto por pedido, indicando o poder de compra dos clientes e o desempenho das vendas. */
+SELECT
+  user_id,
+  AVG(receita) AS ticket_medio
+FROM (
+  SELECT 
+    order_id,
+    user_id,
+    ROUND(SUM(sale_price), 2) AS receita 
+  FROM `bigquery-public-data.thelook_ecommerce.order_items`
+  WHERE status = 'Complete'
+  GROUP BY 1, 2
+)
+GROUP BY 1
+ORDER BY 2 DESC
 
