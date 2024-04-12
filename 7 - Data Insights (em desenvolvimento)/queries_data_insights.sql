@@ -1,13 +1,12 @@
 /* 1 - Market Basket Analysis - Crossbasket (Análise de Cesta de Compras): Identifica padrões de compra e associações entre os itens comprados pelos clientes. */
-/* # Explicação da Query:
+/* 
+# Explicação da Query:
 - Paired_Products: Esta CTE cria pares de produtos que foram comprados juntos no mesmo pedido. A condição oi1.product_id < oi2.product_id garante que cada combinação seja contada apenas uma vez e evita duplicidade.
 - Product_Combinations: Agrupa esses pares para contar quantas vezes cada par de produtos foi pedido.
 - Total_Orders_Per_Product: Conta quantos pedidos contêm cada produto individualmente.
 - Consulta Final: Calcula a porcentagem de pedidos contendo o produto menos frequente no par que também inclui o outro produto do par. Isso é feito dividindo o número de pedidos que contêm ambos os produtos pela quantidade total de pedidos do produto menos comum no par. Os resultados são ordenados por order_count para destacar os pares mais comuns.
 💡 Essa análise ajuda a identificar oportunidades para promoções cruzadas ou recomendações de produtos baseadas em padrões de compra observados, aumentando potencialmente as vendas e a satisfação do cliente ao antecipar suas necessidades.
-*/
 
-/* 
 # Cálculo da Porcentagem:
 Na consulta SQL que preparamos, a porcentagem é calculada da seguinte forma:
 
