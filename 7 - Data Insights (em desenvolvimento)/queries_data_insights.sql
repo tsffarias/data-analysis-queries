@@ -1,5 +1,5 @@
 /* 1 - Market Basket Analysis - Crossbasket (Análise de Cesta de Compras): Identifica padrões de compra e associações entre os itens comprados pelos clientes. */
-/* Explicação da Query:
+/* # Explicação da Query:
 - Paired_Products: Esta CTE cria pares de produtos que foram comprados juntos no mesmo pedido. A condição oi1.product_id < oi2.product_id garante que cada combinação seja contada apenas uma vez e evita duplicidade.
 - Product_Combinations: Agrupa esses pares para contar quantas vezes cada par de produtos foi pedido.
 - Total_Orders_Per_Product: Conta quantos pedidos contêm cada produto individualmente.
@@ -8,25 +8,25 @@
 */
 
 /* 
-Cálculo da Porcentagem:
+# Cálculo da Porcentagem:
 Na consulta SQL que preparamos, a porcentagem é calculada da seguinte forma:
 
 Primeiro, identificamos todos os pedidos que contêm cada par possível de produtos (Produto1 e Produto2) que foram comprados juntos.
 Em seguida, contamos o número total de pedidos que contêm cada um desses produtos individualmente.
 A porcentagem é calculada usando o número de pedidos que contêm ambos os produtos dividido pelo número total de pedidos que contêm o produto menos comum no par. Isso é feito para destacar a força da associação entre os dois produtos.
 
-Explicação da "Porcentagem":
+# Explicação da "Porcentagem":
 "Produto menos comum no par": Este é o produto que aparece em menos pedidos entre os dois produtos que estamos comparando. Por exemplo, se o Produto A está em 100 pedidos e o Produto B em 150, então o Produto A é o "produto menos comum".
 Cálculo da porcentagem: A porcentagem mostra qual fração dos pedidos que contêm o produto menos comum também contêm o outro produto. Se a porcentagem é alta, isso indica uma forte associação entre os dois produtos no contexto de compras conjuntas.
 
-Exemplo Prático
+# Exemplo Prático
 Imagine que:
 
 Produto A está em 100 pedidos.
 Produto B está em 150 pedidos.
 Ambos, Produto A e B, estão juntos em 50 pedidos.
 
-Neste caso:
+# Neste caso:
 
 Produto A é o menos comum (100 pedidos vs. 150 pedidos de Produto B).
 A porcentagem será (50 / 100) * 100 = 50%.
