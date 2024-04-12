@@ -83,20 +83,42 @@ GROUP BY
     pc.product_id1, pc.product_id2, pc.order_count
 ORDER BY 
     pc.order_count DESC;
+	
 
+/* 2 - Taxa de Churn: Mede a proporção de clientes que cancelam ou não renovam seus serviços em um determinado período de tempo. */	
 
-
-/* 2 - Taxa de Churn: Mede a proporção de clientes que cancelam ou não renovam seus serviços em um determinado período de tempo. */
 
 /* 3 - Lifetime Value (LTV) dos Clientes: Representa o valor líquido que um cliente contribui para a empresa durante todo o seu relacionamento com ela. */
+SELECT
+    cliente_id,
+    AVG(valor_total) AS ltv
+FROM pedidos
+GROUP BY cliente_id;
 
 /* 4 - Custo de Aquisição de Clientes (CAC): Mostra o custo médio de adquirir um novo cliente para a empresa. */
+SELECT
+    DATE_TRUNC('month', data_cadastro) AS mes,
+    SUM(custo_campanhas + custo_vendas) / COUNT(DISTINCT cliente_id) AS cac_mensal
+FROM clientes
+GROUP BY mes
+ORDER BY mes;
 
-/* 5 - Lifetime Value (LTV) dos Clientes: Representa o valor líquido que um cliente contribui para a empresa durante todo o seu relacionamento com ela. */
+/* 5 - Custo de Aquisição do Cliente (CAC): Calcula o custo médio para adquirir um novo cliente através de uma campanha de marketing. */
+SELECT (Valor_Gasto_em_Marketing / Novos_Clientes_Adquiridos) AS CAC
+FROM campanhas_table
+WHERE campanha = 'Nome_da_Campanha';
 
 /* 6 - Taxa de Conversão: Indica a proporção de usuários que realizam uma ação desejada, como fazer um pedido, em relação ao número total de usuários. */
+SELECT (COUNT(DISTINCT clientes_retornados) / COUNT(DISTINCT todos_os_clientes)) AS Retenção_Clientes
+FROM pedidos_table
+WHERE data BETWEEN '2024-01-01' AND '2024-03-31';
 
 /* 7 - Taxa de Engajamento do Usuário: Avalia o nível de interação dos usuários com a plataforma ou aplicativo. */
+/* Mede a interação dos usuários com o conteúdo da empresa nas redes sociais. */
+SELECT (Interações / Seguidores) AS Engajamento
+FROM redes_sociais
+WHERE plataforma = 'Instagram'
+AND data_postagem BETWEEN '2024-01-01' AND '2024-03-31';
 
 /* 8 - Análise de Cohort: Agrupa os clientes com base em características semelhantes para analisar seu comportamento ao longo do tempo. */
 

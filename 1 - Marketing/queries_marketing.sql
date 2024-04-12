@@ -67,7 +67,6 @@ FROM pedidos_table
 WHERE campanha = 'Nome_da_Campanha'
 GROUP BY campanha;
 
-
 /* Número de pedidos */
 /* Conta o número total de pedidos realizados. */
 SELECT campanha, COUNT(DISTINCT order_id) AS Num_Pedidos
