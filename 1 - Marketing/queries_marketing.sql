@@ -122,3 +122,20 @@ FROM (
 GROUP BY 1
 ORDER BY 2 DESC
 
+/* Tempo em dias da data de cadastro até a última compra de cada usuário. O time de marketing pode fazer uma ação/campanha focado nestes maiores usuários. */
+select
+  u.id,
+  max(timestamp_diff(o.created_at, u.created_at, day)) as dias_ate_ultima_compra
+from bigquery-public-data.thelook_ecommerce.orders o
+join bigquery-public-data.thelook_ecommerce.users u on u.id = o.user_id
+group by 1
+order by 2 desc;
+
+/* Tempo em dias entre a primeira e a última compra de cada usuário. O time de marketing pode fazer uma ação/campanha focado nestes maiores usuários. */
+select
+  user_id,
+  timestamp_diff(max(created_at), min(created_at), day) as dias_entre_prim_ult
+from bigquery-public-data.thelook_ecommerce.orders
+group by 1
+order by 2 desc;
+

@@ -144,3 +144,24 @@ left join (
 ) as T on T.user_id = u.id
 group by 1, 2, 3, 4, 5, 6
 order by id;
+
+/* 
+14 - Tempo em dias da data de cadastro até a última compra de cada usuário
+*/
+select
+  u.id,
+  max(timestamp_diff(o.created_at, u.created_at, day)) as dias_ate_ultima_compra
+from bigquery-public-data.thelook_ecommerce.orders o
+join bigquery-public-data.thelook_ecommerce.users u on u.id = o.user_id
+group by 1
+order by 2 desc;
+
+/* 
+15 - Tempo em dias entre a primeira e a última compra de cada usuário.
+*/
+select
+  user_id,
+  timestamp_diff(max(created_at), min(created_at), day) as dias_entre_prim_ult
+from bigquery-public-data.thelook_ecommerce.orders
+group by 1
+order by 2 desc;
