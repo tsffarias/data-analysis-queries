@@ -123,19 +123,36 @@ GROUP BY 1
 ORDER BY 2 DESC
 
 /* Tempo em dias da data de cadastro até a última compra de cada usuário. O time de marketing pode fazer uma ação/campanha focado nestes maiores usuários. */
-select
+SELECT
   u.id,
-  max(timestamp_diff(o.created_at, u.created_at, day)) as dias_ate_ultima_compra
-from bigquery-public-data.thelook_ecommerce.orders o
-join bigquery-public-data.thelook_ecommerce.users u on u.id = o.user_id
-group by 1
-order by 2 desc;
+  MAX(timestamp_diff(o.created_at, u.created_at, DAY)) AS dias_ate_ultima_compra
+FROM bigquery-public-data.thelook_ecommerce.orders o
+JOIN bigquery-public-data.thelook_ecommerce.users u ON u.id = o.user_id
+GROUP BY 1
+ORDER BY 2 DESC;
 
 /* Tempo em dias entre a primeira e a última compra de cada usuário. O time de marketing pode fazer uma ação/campanha focado nestes maiores usuários. */
-select
+SELECT
   user_id,
-  timestamp_diff(max(created_at), min(created_at), day) as dias_entre_prim_ult
-from bigquery-public-data.thelook_ecommerce.orders
-group by 1
-order by 2 desc;
+  timestamp_diff(MAX(created_at), MIN(created_at), DAY) AS dias_entre_prim_ult
+FROM bigquery-public-data.thelook_ecommerce.orders
+GROUP BY 1
+ORDER BY 2 DESC;
+
+/* Forma de retornar os usuários com compras recorrentes dentro do mesmo mês (mais de 1 compra). O time de marketing pode fazer uma campanha focada em usuarios mais fiéis aumentando a previsibilidade do resultado */
+SELECT DISTINCT user_id
+FROM (
+  SELECT
+    user_id,
+    order_id,
+    created_at,
+    ROW_NUMBER() OVER (
+      PARTITION BY user_id, EXTRACT(YEAR FROM created_at), EXTRACT(MONTH FROM created_at)
+      ORDER BY created_at
+    ) AS numero_compra
+  FROM bigquery-public-data.thelook_ecommerce.orders
+) AS T
+WHERE numero_compra > 1
+ORDER BY user_id;
+
 

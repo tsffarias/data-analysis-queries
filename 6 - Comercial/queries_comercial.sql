@@ -145,9 +145,7 @@ left join (
 group by 1, 2, 3, 4, 5, 6
 order by id;
 
-/* 
-14 - Tempo em dias da data de cadastro até a última compra de cada usuário
-*/
+/* 14 - Tempo em dias da data de cadastro até a última compra de cada usuário. */
 select
   u.id,
   max(timestamp_diff(o.created_at, u.created_at, day)) as dias_ate_ultima_compra
@@ -156,12 +154,47 @@ join bigquery-public-data.thelook_ecommerce.users u on u.id = o.user_id
 group by 1
 order by 2 desc;
 
-/* 
-15 - Tempo em dias entre a primeira e a última compra de cada usuário.
-*/
+/* 15 - Tempo em dias entre a primeira e a última compra de cada usuário.*/
 select
   user_id,
   timestamp_diff(max(created_at), min(created_at), day) as dias_entre_prim_ult
 from bigquery-public-data.thelook_ecommerce.orders
 group by 1
 order by 2 desc;
+
+/* 16 - Receita acumulada dos usuários, a cada pedido. */
+select
+  o.user_id,
+  o.order_id,
+  oi.id as item_id,
+  o.created_at,
+  round(sum(sale_price) over(partition by o.user_id order by o.created_at, oi.id rows between unbounded preceding and current row), 2) as receita_acumulada
+from bigquery-public-data.thelook_ecommerce.orders o
+join bigquery-public-data.thelook_ecommerce.order_items oi on oi.order_id = o.order_id
+order by 1, 4, 3;
+
+/* 17 - Tempo em dias entre uma compra e outra para cada usuário */
+select
+    user_id,
+    order_id,
+    created_at,
+    timestamp_diff(created_at, lag(created_at) over(partition by user_id order by created_at), day) diferenca_dias
+from bigquery-public-data.thelook_ecommerce.orders
+order by 1, 3
+-- order by 4 desc (para mostrar usuarios com maior diferenca em dias)
+
+/* 18 - Forma de retornar os usuários com compras recorrentes dentro do mesmo mês (mais de 1 compra) */
+SELECT DISTINCT user_id
+FROM (
+  SELECT
+    user_id,
+    order_id,
+    created_at,
+    ROW_NUMBER() OVER (
+      PARTITION BY user_id, EXTRACT(YEAR FROM created_at), EXTRACT(MONTH FROM created_at)
+      ORDER BY created_at
+    ) AS numero_compra
+  FROM bigquery-public-data.thelook_ecommerce.orders
+) AS T
+WHERE numero_compra > 1
+ORDER BY user_id;
