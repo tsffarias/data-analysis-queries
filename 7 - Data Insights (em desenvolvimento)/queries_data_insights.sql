@@ -1,3 +1,7 @@
+/* 
+** QUERIES DEPARTAMENTO DATA INSIGHTS **
+*/
+
 /* 1 - Market Basket Analysis - Crossbasket (Análise de Cesta de Compras): Identifica padrões de compra e associações entre os itens comprados pelos clientes. */
 /* 
 # Explicação da Query:
