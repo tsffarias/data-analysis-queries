@@ -1,3 +1,7 @@
+/* 
+** QUERIES DEPARTAMENTO RECURSOS HUMANOS (RH) **
+*/
+
 /* 1- Taxa de Rotatividade (Turnover Rate) */
 /* KPI: Turnover Rate = (Número de Desligamentos / Média de Funcionários) * 100 */
 
