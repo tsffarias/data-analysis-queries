@@ -1,3 +1,7 @@
+/* 
+** QUERIES DEPARTAMENTO MARKETING **
+*/
+
 /* Custo por Clique (CPC) de Campanhas */
 /* Calcula o custo médio que a empresa paga por cada clique em uma determinada campanha de marketing. */
 SELECT (Valor_Gasto_em_Marketing / Cliques) AS CPC
@@ -27,7 +31,6 @@ WHERE campanha = 'Nome_da_Campanha';
 SELECT (Pedidos / Cliques) AS Conversão
 FROM campanhas_table
 WHERE campanha = 'Nome_da_Campanha';
-
 
 /* Taxa de Conversão de Cliques em Pedidos (CCR) */
 /* Métrica para medir a eficácia das campanhas de marketing em gerar pedidos. */
@@ -73,7 +76,6 @@ SELECT campanha, COUNT(DISTINCT order_id) AS Num_Pedidos
 FROM pedidos_table
 WHERE campanha = 'Nome_da_Campanha'
 GROUP BY campanha;
-
 
 /* Número de Clientes por Campanha */
 /* Conta o número de clientes distintos que fizeram pedidos durante uma campanha. */
