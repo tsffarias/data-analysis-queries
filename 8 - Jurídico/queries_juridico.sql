@@ -1,8 +1,10 @@
 /* 
-	** QUERIES DEPARTAMENTO JURIDICO **
+** QUERIES DEPARTAMENTO JURIDICO **
 
-	# Dicionário de termos:
-		- Litígios: se referem a disputas legais ou controvérsias que são resolvidas em um tribunal ou através de arbitragem. No contexto jurídico, um litígio pode envolver qualquer tipo de conflito legal, como disputas contratuais, questões trabalhistas, violações de direitos autorais, reclamações de consumidores, e mais. Esses processos podem ser civis ou criminais, e geralmente envolvem duas ou mais partes que buscam uma solução legal para o seu desacordo.
+# Dicionário de termos:
+- Litígios: se referem a disputas legais ou controvérsias que são resolvidas em um tribunal ou através de arbitragem. No contexto jurídico, 
+um litígio pode envolver qualquer tipo de conflito legal, como disputas contratuais, questões trabalhistas, violações de direitos autorais, reclamações de consumidores, e mais. 
+Esses processos podem ser civis ou criminais, e geralmente envolvem duas ou mais partes que buscam uma solução legal para o seu desacordo.
 */
 
 /* Número de Litígios por Período: Mede a quantidade de novos processos legais iniciados contra ou pela empresa em um determinado período.*/
