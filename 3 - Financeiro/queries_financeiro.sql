@@ -1,3 +1,7 @@
+/* 
+** QUERIES DEPARTAMENTO FINANCEIRO **
+*/
+
 /* EBITDA (Earnings Before Interest, Taxes, Depreciation, and Amortization) Ele representa os ganhos operacionais da empresa, excluindo os efeitos de itens não operacionais, como juros, impostos, depreciação e amortização.*/
 -- EBITDA Mensal
 SELECT
