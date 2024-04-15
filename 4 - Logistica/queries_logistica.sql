@@ -1,3 +1,7 @@
+/* 
+** QUERIES DEPARTAMENTO LOGISTICO **
+*/
+
 /* Taxa de Entrega no Prazo: Porcentagem de pedidos entregues dentro do tempo estimado. */
 SELECT COUNT(DISTINCT order_id) AS TotalPedidos,
        SUM(CASE WHEN entrega_no_prazo = 1 THEN 1 ELSE 0 END) AS PedidosEntreguesNoPrazo,

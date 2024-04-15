@@ -1,3 +1,7 @@
+/* 
+** QUERIES GEOGRAFICAS **
+*/
+
 /* Bases de dados Bigquery Public Data */
 /* Query com informações geograficas de rotas de bicicletas em San Francisco + Calculo de distancia em metros e velocidade média */
 
