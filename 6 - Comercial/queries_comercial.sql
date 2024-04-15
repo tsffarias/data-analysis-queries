@@ -1,3 +1,7 @@
+/* 
+** QUERIES DEPARTAMENTO COMERCIAL **
+*/
+
 /* 1 - Volume de Pedidos por Região */
 /* Monitora a demanda em diferentes áreas geográficas, permitindo ajustes na estratégia de oferta e promoções. */
 SELECT regiao, COUNT(DISTINCT order_id) AS volume_pedidos
