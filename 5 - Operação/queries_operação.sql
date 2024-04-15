@@ -1,3 +1,7 @@
+/* 
+** QUERIES DEPARTAMENTO OPERAÇÃO **
+*/
+
 /* 1 - Taxa de Retenção de Clientes: Porcentagem de clientes que continuam utilizando o serviço após o primeiro pedido. */
 SELECT (COUNT(DISTINCT cliente_id) / (SELECT COUNT(DISTINCT cliente_id) FROM Pedidos)) * 100 AS TaxaRetencaoClientes
 FROM Pedidos
