@@ -92,3 +92,33 @@ WHERE e.join_date <= '2020-01-01'
 GROUP BY e.employee_name, e.department, e.join_date, t.training_completed
 HAVING AVG(r.performance_score) > 4.5
 ORDER BY avg_score DESC;
+
+/* 8 - Identificar quantidade de aniversarios de funcionários por mês. Objetivo desta query seria preparação antecipada de celebrações */
+WITH cte_mes AS (
+  SELECT 
+    employee_id,
+    EXTRACT(MONTH FROM birth_date) AS mes_nascimento
+  FROM employees
+)
+
+SELECT
+  mes_nascimento,
+  COUNT(CASE WHEN mes_nascimento = 1 THEN 1 END) AS Janeiro,
+  COUNT(CASE WHEN mes_nascimento = 2 THEN 1 END) AS Fevereiro,
+  COUNT(CASE WHEN mes_nascimento = 3 THEN 1 END) AS Marco,
+  COUNT(CASE WHEN mes_nascimento = 4 THEN 1 END) AS Abril,
+  COUNT(CASE WHEN mes_nascimento = 5 THEN 1 END) AS Maio,
+  COUNT(CASE WHEN mes_nascimento = 6 THEN 1 END) AS Junho,
+  COUNT(CASE WHEN mes_nascimento = 7 THEN 1 END) AS Julho,
+  COUNT(CASE WHEN mes_nascimento = 8 THEN 1 END) AS Agosto,
+  COUNT(CASE WHEN mes_nascimento = 9 THEN 1 END) AS Setembro,
+  COUNT(CASE WHEN mes_nascimento = 10 THEN 1 END) AS Outubro,
+  COUNT(CASE WHEN mes_nascimento = 11 THEN 1 END) AS Novembro,
+  COUNT(CASE WHEN mes_nascimento = 12 THEN 1 END) AS Dezembro
+FROM cte_mes
+GROUP BY mes_nascimento
+ORDER BY mes_nascimento
+
+
+
+
