@@ -202,3 +202,21 @@ FROM (
 ) AS T
 WHERE numero_compra > 1
 ORDER BY user_id;
+
+/* 19 - Produtos mais vendidos por categoria */
+with cte_sales_qty_data as (
+    select
+        p.product_name,
+        c.category_name,
+        sum(od.quantity) as qty,
+        rank() over(partition by c.category_name order by sum(od.quantity) desc) as rank
+    from order_details od
+    join products p on od.product_id = p.product_id
+    join categories c on p.category_id = c.category_id
+    group by p.product_name, c.category_name
+)
+
+select * from cte_sales_qty_data
+where rank <= 3
+order by category_name, rank
+
