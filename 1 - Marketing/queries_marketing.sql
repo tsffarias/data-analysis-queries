@@ -157,4 +157,137 @@ FROM (
 WHERE numero_compra > 1
 ORDER BY user_id;
 
+/* 
+### Análise RFM - Segmentação de Clientes:
+A análise RFM é uma técnica de marketing usada para quantificar o valor de um cliente com base em três aspectos específicos do seu comportamento de compra. RFM significa:
+
+- Recência (R): Há quanto tempo o cliente fez a última compra. Clientes que compraram recentemente são mais propensos a comprar novamente em comparação com aqueles que não compram há muito tempo.
+- Frequência (F): Com que frequência o cliente compra dentro de um determinado período. Clientes que compram com frequência são considerados mais engajados e valiosos.
+- Monetário (M): O valor monetário total gasto pelo cliente. Clientes que gastam mais são vistos como mais valiosos.
+
+A combinação desses três indicadores ajuda as empresas a identificar quais clientes são mais valiosos e a personalizar as estratégias de marketing para diferentes segmentos de clientes, de acordo com suas características de compra. 
+Por exemplo, um cliente que fez uma compra recentemente, compra com frequência e gasta muito é idealmente o mais valioso para a empresa e provavelmente será o foco de campanhas de marketing intensivas.
+*/
+
+/* Aqui está um exemplo de query SQL que calcula os scores de Recência, Frequência e Monetário para cada cliente: */
+
+WITH Recency AS (
+    SELECT
+        customer_id,
+        MAX(order_date) AS last_purchase
+    FROM sales
+    GROUP BY customer_id
+),
+
+Frequency AS (
+    SELECT
+        customer_id,
+        COUNT(*) AS total_purchases
+    FROM sales
+    GROUP BY customer_id
+),
+
+Monetary AS (
+    SELECT
+        customer_id,
+        SUM(order_value) AS total_spent
+    FROM sales
+    GROUP BY customer_id
+)
+
+SELECT
+    R.customer_id,
+    R.last_purchase AS recency,
+    F.total_purchases AS frequency,
+    M.total_spent AS monetary
+FROM Recency R
+JOIN Frequency F ON R.customer_id = F.customer_id
+JOIN Monetary M ON R.customer_id = M.customer_id;
+
+/* 
+### Explicação:
+
+1. Recency: A CTE (Common Table Expression) `Recency` calcula a data mais recente de compra para cada cliente.
+2. Frequency: A CTE `Frequency` conta o número total de compras feitas por cada cliente.
+3. Monetary: A CTE `Monetary` soma o valor total gasto por cada cliente.
+4. Join Final: Essas três CTEs são então combinadas para fornecer um único resultado com `customer_id`, recência (data da última compra), frequência (total de compras) e monetário (total gasto).
+
+Esse SQL te dá uma tabela básica de RFM que você pode usar para segmentar seus clientes e desenvolver estratégias de marketing personalizadas com base em seus comportamentos de compra.
+*/
+
+/*
+A partir da tabela básica de RFM que criamos anteriormente, podemos segmentar os clientes com base em critérios definidos para Recência, Frequência e Monetário. Aqui está uma abordagem simples para categorizar cada um dos aspectos em três níveis: Alto, Médio e Baixo.
+
+Vamos supor que você tenha calculado ou definido alguns limites para cada categoria com base em sua distribuição de dados ou necessidades de negócios. Por exemplo:
+
+- Recência: Menos dias desde a última compra = mais recente = melhor
+  - Alto: até 30 dias
+  - Médio: 31 a 90 dias
+  - Baixo: mais de 90 dias
+
+- Frequência: Mais compras = melhor
+  - Alto: 10 ou mais compras
+  - Médio: 4 a 9 compras
+  - Baixo: menos de 4 compras
+
+- Monetário: Mais gasto = melhor
+  - Alto: mais de R$500
+  - Médio: R$200 a R$500
+  - Baixo: menos de R$200
+
+Aqui está uma query SQL que utiliza esses critérios para segmentar os clientes:
+
+### Explicação:
+- Recency_Score, Frequency_Score, Monetary_Score: Calcula a pontuação de Recência, Frequência e Monetário para cada cliente.
+- RFM_Class: Concatena as pontuações de Recência, Frequência e Monetário para criar uma classificação RFM combinada, que pode ser usada para identificar segmentos de clientes de alto valor, médio e baixo.
+
+Essa segmentação ajuda você a entender melhor seus clientes e a otimizar suas estratégias de marketing e comunicação com base no comportamento de compra dos clientes.
+Ela ermite desenvolver estratégias de marketing personalizadas para cada segmento, como oferecer promoções específicas para aumentar a frequência de compras dos clientes esporádicos ou manter o engajamento dos clientes mais valiosos.
+*/
+
+WITH RFM AS (
+    SELECT
+        customer_id,
+        MAX(order_date) AS last_purchase,
+        COUNT(*) AS total_purchases,
+        SUM(order_value) AS total_spent
+    FROM sales
+    GROUP BY customer_id
+),
+
+RFM_Segmentation AS (
+    SELECT
+        customer_id,
+        last_purchase,
+        total_purchases,
+        total_spent,
+        -- Recency Score
+        CASE
+            WHEN last_purchase >= CURRENT_DATE - INTERVAL '30' DAY THEN 'Alto'
+            WHEN last_purchase < CURRENT_DATE - INTERVAL '30' DAY AND last_purchase >= CURRENT_DATE - INTERVAL '90' DAY THEN 'Médio'
+            ELSE 'Baixo'
+        END AS Recency_Score,
+        -- Frequency Score
+        CASE
+            WHEN total_purchases >= 10 THEN 'Alto'
+            WHEN total_purchases >= 4 AND total_purchases < 10 THEN 'Médio'
+            ELSE 'Baixo'
+        END AS Frequency_Score,
+        -- Monetary Score
+        CASE
+            WHEN total_spent > 500 THEN 'Alto'
+            WHEN total_spent BETWEEN 200 AND 500 THEN 'Médio'
+            ELSE 'Baixo'
+        END AS Monetary_Score
+    FROM RFM
+)
+
+SELECT
+    *,
+    Recency_Score,
+    Frequency_Score,
+    Monetary_Score,
+    -- Overall RFM Score
+    CONCAT(Recency_Score, Frequency_Score, Monetary_Score) AS RFM_Class
+FROM RFM_Segmentation;
 
