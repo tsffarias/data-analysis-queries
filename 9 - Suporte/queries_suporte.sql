@@ -1,0 +1,3 @@
+/* 
+** QUERIES DEPARTAMENTO DE SUPORTE **
+*/
